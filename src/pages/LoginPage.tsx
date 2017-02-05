@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Store } from 'redux';
+import * as Types from '../Types';
+
 interface LoginState {
     data: any;
 }
 
-let LoginPage = {
+let LoginPage: Types.Page<any, any> = {
     // redux reducer http://redux.js.org/docs/basics/Reducers.html
     reducer: function (state: LoginState = {data: {}}, action: any) {
         switch (action.type) {
@@ -17,7 +19,7 @@ let LoginPage = {
 
     // function that returns the React component for the page
     pageFactory: function (store: Store<{}>, sideEffects: {}) {
-        return React.createClass<any, any>({
+        return React.createClass({
             getInitialState() {
                 return {password: ''};
             },

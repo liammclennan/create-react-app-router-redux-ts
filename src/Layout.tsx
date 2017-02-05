@@ -1,10 +1,6 @@
 import * as React from 'react';
 import './Layout.css';
 
-interface LayoutProps {
-  children: any[];
-}
-
 const Layout = React.createClass({
   render: function () {
     return (<div className="App">

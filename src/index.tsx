@@ -1,27 +1,46 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Layout from './Layout';
-import aboutPage from './pages/AboutPage';
-import loginPage from './pages/LoginPage';
-import Route from 'react-router/lib/Route';
-import IndexRoute from 'react-router/lib/IndexRoute';
-import Router from 'react-router/lib/Router';
-import Link from 'react-router/lib/Link';
-import browserHistory from 'react-router/lib/browserHistory';
+
+let Route = require('react-router/lib/Route');
+let IndexRoute = require('react-router/lib/IndexRoute');
+let Router = require('react-router/lib/Router');
+let Link = require('react-router/lib/Link');
+let browserHistory = require('react-router/lib/browserHistory');
 import { createStore, combineReducers } from 'redux';
+
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Layout from './Layout';
+import aboutPage from './pages/AboutPage';
+import loginPage from './pages/LoginPage';
+
 let store = createStore(combineReducers({about: aboutPage.reducer, login: loginPage.reducer}));
 
-
+let routes =  <Route path="/" component={Layout}>
+                <IndexRoute component={Home}/>
+                {[aboutPage, loginPage].map(page => 
+                  <Route key={page.route} path={page.route} component={page.pageFactory(store, page.sideEffects)} />
+                )}    
+              </Route>;
 
 function render() {
   return ReactDOM.render(
-    <Layout />,
+    <Router history={browserHistory} >
+      {routes}
+    </Router>,
     document.getElementById('root') as HTMLElement
   );
 }
 
 store.subscribe(render);
 render();
+
+function Home() {
+  return <div><h1>Home</h1>
+    <ul>
+      <li><Link to="/about">About</Link></li>
+      <li><Link to="/login">Login</Link></li>
+    </ul>
+  </div>;
+}

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Store } from 'redux';
+import * as Types from '../Types';
 
 declare var fetch: any;
 
@@ -8,9 +9,6 @@ interface AboutPageState {
 }
 interface AboutSideEffects {
     onLoad: () => Promise<any>;
-}
-interface AppState {
-    about: AboutPageState;
 }
 
 function aboutReducer(state: AboutPageState = {data: {}}, action: any) {
@@ -21,8 +19,8 @@ function aboutReducer(state: AboutPageState = {data: {}}, action: any) {
     }
 }
 
-function aboutPageFactory(store: Store<AppState>, sideEffects: AboutSideEffects) {
-    return class AboutPage extends React.Component<any,any> {
+function aboutPageFactory(store: Store<any>, sideEffects: AboutSideEffects) {
+    return class AboutPage extends React.Component<any, any> {
         render() {
             var data = store.getState().about.data;
             return <div>{data['user-agent'] ? data['user-agent'] : 'Loading...'}
@@ -47,7 +45,7 @@ const aboutSideEffects: AboutSideEffects = {
     }
 };
 
-let AboutPage = {
+let AboutPage: Types.Page<any, any> = {
     // redux reducer http://redux.js.org/docs/basics/Reducers.html
     reducer: aboutReducer,
 
