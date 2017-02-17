@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Store } from 'redux';
 import * as Types from '../Types';
+import * as Rx from 'rxjs/Rx';
 
 declare var fetch: any;
 
@@ -31,9 +32,7 @@ function aboutPageFactory(store: Store<any>, sideEffects: AboutSideEffects) {
         }
         constructor() {
             super();
-            sideEffects.onLoad()
-                .then(data => store.dispatch({type: 'STUFF_FROM_WORLD_BANK', data: data}))
-                .catch(err => { throw err; });
+            store.dispatch({type: 'FETCH_DATA'});
         }
     };
 }
@@ -54,6 +53,16 @@ let AboutPage: Types.Page<any, any> = {
     
     // collection of side effect functions (ajax etc)    
     sideEffects: aboutSideEffects,
+
+    epic: function (action$: Rx.Observable<any>) {
+        return action$.filter(a => a.type === 'FETCH_DATA')
+            .mergeMap(action => 
+                Rx.Observable.ajax.getJSON('https://httpbin.org/user-agent')
+                    .map(function (response: any) {
+                        return { type: 'STUFF_FROM_WORLD_BANK', data: response };
+                    })
+            );
+    },
 
     // the route to match to this page
     route: 'about'

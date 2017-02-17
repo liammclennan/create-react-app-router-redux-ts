@@ -6,7 +6,8 @@ let IndexRoute = require('react-router/lib/IndexRoute');
 let Router = require('react-router/lib/Router');
 let Link = require('react-router/lib/Link');
 let browserHistory = require('react-router/lib/browserHistory');
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,7 +16,11 @@ import Layout from './Layout';
 import aboutPage from './pages/AboutPage';
 import loginPage from './pages/LoginPage';
 
-let store = createStore(combineReducers({about: aboutPage.reducer, login: loginPage.reducer}));
+const epicMiddleware = createEpicMiddleware(aboutPage.epic);
+let store = createStore(
+              combineReducers({about: aboutPage.reducer, login: loginPage.reducer}),
+              applyMiddleware(epicMiddleware)
+            );
 
 let routes =  <Route path="/" component={Layout}>
                 <IndexRoute component={Home}/>

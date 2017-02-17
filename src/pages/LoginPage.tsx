@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Store } from 'redux';
 import * as Types from '../Types';
+import * as Rx from 'rxjs/Rx';
 
 interface LoginState {
     data: any;
@@ -51,6 +52,10 @@ let LoginPage: Types.Page<any, any> = {
     
     // collection of side effect functions (ajax etc)    
     sideEffects: { 
+    },
+
+    epic: function (action$: Rx.Observable<any>) {
+        return Rx.Observable.of(1);
     },
 
     // the route to match to this page
