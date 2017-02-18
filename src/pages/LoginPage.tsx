@@ -19,7 +19,7 @@ let LoginPage: Types.Page<any, any> = {
     },
 
     // function that returns the React component for the page
-    pageFactory: function (store: Store<{}>, sideEffects: {}) {
+    pageFactory: function (store: Store<{}>) {
         return React.createClass({
             getInitialState() {
                 return {password: ''};
@@ -50,10 +50,6 @@ let LoginPage: Types.Page<any, any> = {
         });
     },
     
-    // collection of side effect functions (ajax etc)    
-    sideEffects: { 
-    },
-
     epic: function (action$: Rx.Observable<any>) {
         return Rx.Observable.of(1);
     },

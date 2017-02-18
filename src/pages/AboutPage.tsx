@@ -20,7 +20,8 @@ function aboutReducer(state: AboutPageState = {data: {}}, action: any) {
     }
 }
 
-function aboutPageFactory(store: Store<any>, sideEffects: AboutSideEffects) {
+function aboutPageFactory(store: Store<any>) {
+    var fetching = false;
     return class AboutPage extends React.Component<any, any> {
         render() {
             var data = store.getState().about.data;
@@ -32,17 +33,14 @@ function aboutPageFactory(store: Store<any>, sideEffects: AboutSideEffects) {
         }
         constructor() {
             super();
+        }
+        componentWillMount() {
+            if (fetching) { return; };
+            fetching = true;
             store.dispatch({type: 'FETCH_DATA'});
         }
     };
 }
-
-const aboutSideEffects: AboutSideEffects = { 
-    onLoad: function () {
-        return fetch('https://httpbin.org/user-agent')
-            .then(response => response.json());
-    }
-};
 
 let AboutPage: Types.Page<any, any> = {
     // redux reducer http://redux.js.org/docs/basics/Reducers.html
@@ -51,9 +49,6 @@ let AboutPage: Types.Page<any, any> = {
     // function that returns the React component for the page
     pageFactory: aboutPageFactory,
     
-    // collection of side effect functions (ajax etc)    
-    sideEffects: aboutSideEffects,
-
     epic: function (action$: Rx.Observable<any>) {
         return action$.filter(a => a.type === 'FETCH_DATA')
             .mergeMap(action => 

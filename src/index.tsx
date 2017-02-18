@@ -25,7 +25,7 @@ let store = createStore(
 let routes =  <Route path="/" component={Layout}>
                 <IndexRoute component={Home}/>
                 {[aboutPage, loginPage].map(page => 
-                  <Route key={page.route} path={page.route} component={page.pageFactory(store, page.sideEffects)} />
+                  <Route key={page.route} path={page.route} component={page.pageFactory(store)} />
                 )}    
               </Route>;
 
