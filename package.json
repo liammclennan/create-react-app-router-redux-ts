@@ -8,7 +8,7 @@
     "@types/react": "^15.0.6",
     "@types/react-dom": "^0.14.22",
     "@types/bootstrap": "^3.3.32",
-    "react-scripts-ts": "1.0.6"
+    "react-scripts-ts": "*"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
