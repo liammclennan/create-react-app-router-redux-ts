@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@types/bootstrap": "^3.3.32",
     "@types/jest": "^18.1.1",
     "@types/node": "^7.0.5",
     "@types/react": "^15.0.6",
     "@types/react-dom": "^0.14.22",
-    "@types/bootstrap": "^3.3.32",
-    "react-scripts-ts": "*"
+    "react-scripts-ts": "*",
+    "s3": "^4.4.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
@@ -23,6 +24,7 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "deploy": "node deploy.js"
   }
 }
