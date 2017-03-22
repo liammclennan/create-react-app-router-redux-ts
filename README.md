@@ -4,7 +4,7 @@ See pages/README.md for details on how to add pages.
 
 See pages/AboutPage.test.ts for an example of testing a page component, including mocking an AJAX request.
 
-This project was bootstrapped with Create React App.
+This project was bootstrapped with Create React App and https://github.com/wmonk/create-react-app-typescript.
 
 Below you will find some information on how to perform common tasks.
 You can find the most recent version of this guide here.

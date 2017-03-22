@@ -1,7 +1,8 @@
 {
-  "name": "cra-ts",
-  "version": "0.1.0",
-  "private": true,
+  "name": "cra-liam",
+  "version": "0.1.1",
+  "description": "create-react-app-typescript enhanced with react router, bootstrap, react-jsonschema-forms, redux and plenty of opinion",
+  "license": "MIT",
   "devDependencies": {
     "@types/bootstrap": "^3.3.32",
     "@types/jest": "^18.1.1",
@@ -27,6 +28,16 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
+    "predeploy": "npm run build",
     "deploy": "node deploy.js"
+  },
+  "author": { 
+    "name" : "Liam McLennan",
+    "email" : "liam.mclennan@gmail.com",
+    "url" : "http://withouttheloop.com"
+  },
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/liammclennan/create-react-app-router-redux-ts.git"
   }
 }
