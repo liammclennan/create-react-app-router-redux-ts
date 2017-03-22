@@ -2,10 +2,43 @@ import * as React from 'react';
 import { Store } from 'redux';
 import * as Types from '../Types';
 import * as Rx from 'rxjs/Rx';
+import Form, {IChangeEvent} from 'react-jsonschema-form';
 
 interface LoginState {
     data: any;
 }
+
+/* tslint:disable:quotemark */
+const loginFormSchema = {
+  "title": "Login",
+  "description": "A simple form example.",
+  "type": "object",
+  "required": [
+    "Email",
+    "Password"
+  ],
+  "properties": {
+    "Email": {
+      "type": "string",
+      "format": "email"
+    },
+    "Password": {
+      "type": "string",
+      "format": "password"
+    }
+  }
+};
+
+const uiSchema = {
+  "Email": {
+    "ui:autofocus": true
+  },
+  "Password": {
+    "ui:widget": "password",
+    "ui:help": "Hint: Make it strong!"
+  }
+};
+/* tslint:enable:quotemark */
 
 let LoginPage: Types.Page<any, any> = {
     // redux reducer http://redux.js.org/docs/basics/Reducers.html
@@ -21,32 +54,17 @@ let LoginPage: Types.Page<any, any> = {
     // function that returns the React component for the page
     pageFactory: function (store: Store<{}>) {
         return React.createClass({
-            getInitialState() {
-                return {password: ''};
-            },
-            bindState(property: string) {
-                return (event) => { this.setState({ [property]: event.target.value }); };
-            },
-            onSubmit(e: Event) {
-                e.preventDefault();
-                store.dispatch({type: 'LOGIN_SUBMITED', password: this.state.password});
+            onSubmit(submission: IChangeEvent) {
+                store.dispatch(Object.assign({type: 'LOGIN_SUBMITED'}, {formData: submission.formData}));
             },
             render: function () {
+                const log = (type) => console.log.bind(console, type);
                 return (
-                    <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input 
-                            type="password" 
-                            value={this.state.name} 
-                            onChange={this.bindState('password')} 
-                            className="form-control" 
-                            id="exampleInputPassword1" 
-                            placeholder="Password" 
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-default">Submit</button>
-                </form>);
+                        <Form 
+                            schema={loginFormSchema}
+                            onSubmit={this.onSubmit}
+                            onError={log('errors')} 
+                        />);
             }
         });
     },
