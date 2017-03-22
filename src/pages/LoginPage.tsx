@@ -32,7 +32,8 @@ let LoginPage: Types.Page<any, any> = {
                 store.dispatch({type: 'LOGIN_SUBMITED', password: this.state.password});
             },
             render: function () {
-                return <form onSubmit={this.onSubmit}>
+                return (
+                    <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input 
@@ -45,13 +46,13 @@ let LoginPage: Types.Page<any, any> = {
                         />
                     </div>
                     <button type="submit" className="btn btn-default">Submit</button>
-                </form>;
+                </form>);
             }
         });
     },
     
     epic: function (action$: Rx.Observable<any>) {
-        return Rx.Observable.of(1);
+        return Rx.Observable.empty();
     },
 
     // the route to match to this page

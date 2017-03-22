@@ -8,9 +8,6 @@ declare var fetch: any;
 interface AboutPageState {
     data: any;
 }
-interface AboutSideEffects {
-    onLoad: () => Promise<any>;
-}
 
 function aboutReducer(state: AboutPageState = {data: {}}, action: any) {
     switch (action.type) {
@@ -25,11 +22,12 @@ function aboutPageFactory(store: Store<any>) {
     return class AboutPage extends React.Component<any, any> {
         render() {
             var data = store.getState().about.data;
-            return <div>{data['user-agent'] ? data['user-agent'] : 'Loading...'}
+            return (
+                <div>{data['user-agent'] ? data['user-agent'] : 'Loading...'}
                 <button type="button" className="btn btn-default btn-lg">
                     <span className="glyphicon glyphicon-star" aria-hidden="true"/> Star
                 </button>
-            </div>;       
+            </div>);       
         }
         constructor() {
             super();

@@ -22,12 +22,14 @@ let store = createStore(
               applyMiddleware(epicMiddleware)
             );
 
-let routes =  <Route path="/" component={Layout}>
-                <IndexRoute component={Home}/>
-                {[aboutPage, loginPage].map(page => 
-                  <Route key={page.route} path={page.route} component={page.pageFactory(store)} />
-                )}    
-              </Route>;
+let routes =  (
+  <Route path="/" component={Layout}>
+      <IndexRoute component={Home}/>
+      {[aboutPage, loginPage].map(page => 
+        <Route key={page.route} path={page.route} component={page.pageFactory(store)} />
+      )}    
+  </Route>
+);
 
 function render() {
   return ReactDOM.render(
@@ -42,10 +44,11 @@ store.subscribe(render);
 render();
 
 function Home() {
-  return <div><h1>Home</h1>
-    <ul>
-      <li><Link to="/about">About</Link></li>
-      <li><Link to="/login">Login</Link></li>
-    </ul>
-  </div>;
+  return (
+    <div><h1>Home</h1>
+      <ul>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/login">Login</Link></li>
+      </ul>
+    </div>);
 }
